@@ -115,12 +115,12 @@ runs:
         GHA_SIGSTORE_PYTHON_INTERNAL_BE_CAREFUL_DEBUG: "${{ inputs.internal-be-careful-debug }}"
         GHA_SIGSTORE_PYTHON_INPUTS: "${{ inputs.inputs }}"
       shell: bash
-    - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+    - uses: chainguard-actions/actions-upload-artifact@61ae9717c37cd5ac5fcaa5599c0dab961d043ecc # v4
       if: inputs.upload-signing-artifacts == 'true'
       with:
         name: "signing-artifacts-${{ github.job }}"
         path: "${{ env.GHA_SIGSTORE_PYTHON_INTERNAL_SIGNING_ARTIFACTS }}"
-    - uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2
+    - uses: chainguard-actions/softprops-action-gh-release@b42eabd8e3a3ea584a56ea240e20bee8991643bd # v2
       if: inputs.release-signing-artifacts == 'true' && github.event_name == 'release' && github.event.action == 'published'
       with:
         files: "${{ env.GHA_SIGSTORE_PYTHON_INTERNAL_SIGNING_ARTIFACTS }}"
