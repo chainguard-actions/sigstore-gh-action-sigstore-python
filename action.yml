@@ -74,6 +74,7 @@ inputs:
     description: "run with debug logs (default false)"
     required: false
     default: "false"
+
 runs:
   using: "composite"
   steps:
@@ -102,6 +103,7 @@ runs:
       env:
         GHA_SIGSTORE_PYTHON_INTERNAL_BE_CAREFUL_DEBUG: "${{ inputs.internal-be-careful-debug }}"
       shell: bash
+
     - name: Run sigstore-python
       id: sigstore-python
       run: |
@@ -124,11 +126,13 @@ runs:
         GHA_SIGSTORE_PYTHON_INTERNAL_BE_CAREFUL_DEBUG: "${{ inputs.internal-be-careful-debug }}"
         GHA_SIGSTORE_PYTHON_INPUTS: "${{ inputs.inputs }}"
       shell: bash
+
     - uses: chainguard-actions/actions-upload-artifact@dc8d35a3347d79eda9033e7af73f508094dd41b5 # v7.0.1
       if: inputs.upload-signing-artifacts == 'true'
       with:
         name: "signing-artifacts-${{ github.job }}"
         path: "${{ env.GHA_SIGSTORE_PYTHON_INTERNAL_SIGNING_ARTIFACTS }}"
+
     - uses: chainguard-actions/softprops-action-gh-release@f7c397f168887fda68bc8e2774f685b8551fc0ad # v3.0.2
       if: inputs.release-signing-artifacts == 'true' && github.event_name == 'release' && github.event.action == 'published'
       with:
